@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Purchase } from "./purchase.model";
 
 export interface IUser {
     id_user?: number;
@@ -67,4 +68,7 @@ export class User {
         name: "updatedAt"
     })
     updatedAt: Date;
+
+    @OneToMany(type => Purchase, purchase => purchase.id_purchase)
+    purchases: Purchase[];
 }

@@ -1,4 +1,13 @@
 import { ConnectionOptions, createConnection } from 'typeorm';
+
+import { Album } from '../models/album.model';
+import { Artist } from '../models/artist.model';
+import { Genre } from '../models/genre.model';
+import { Library } from '../models/library.model';
+import { LibraryAlbum } from '../models/library_album.model';
+import { LibraryTrack } from '../models/library_track.model';
+import { Purchase } from '../models/purchase.model';
+import { Track } from '../models/track.model';
 import { User } from '../models/user.model';
 
 const connParams: ConnectionOptions = {
@@ -9,7 +18,15 @@ const connParams: ConnectionOptions = {
     database: 'zuiiDB',
     name: 'zuiiDB',
     entities: [
-        User
+        User,
+        Library,
+        Genre,
+        Artist,
+        Album,
+        Track,
+        Purchase,
+        LibraryAlbum,
+        LibraryTrack
     ],
     synchronize: false,
     logging: true
