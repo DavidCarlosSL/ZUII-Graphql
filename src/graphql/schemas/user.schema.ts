@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 import { IUser } from "../../models/user.model";
 
 @ObjectType()
@@ -23,6 +23,18 @@ class UserSchema implements IUser {
     
     @Field()
     updatedAt: Date;
+}
+
+@InputType({description: "Add User"})
+export class AddUserInput implements Partial<UserSchema> {
+    @Field(type => String, {nullable: false})
+    name_user: string;
+
+    @Field(type => String, {nullable: false})
+    email_user: string;
+
+    @Field(type => String, {nullable: false})
+    password_user: string;
 }
 
 export default UserSchema;

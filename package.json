@@ -20,6 +20,7 @@
   "author": "David Carlos",
   "license": "ISC",
   "dependencies": {
+    "@types/md5": "^2.2.1",
     "apollo-server": "^2.19.0",
     "class-validator": "^0.12.2",
     "graphql": "^15.4.0",
@@ -27,6 +28,7 @@
     "inversify": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
+    "md5": "^2.3.0",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
     "mysql": "^2.18.1",

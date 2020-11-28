@@ -1,14 +1,13 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
-import * as moment from 'moment';
 
 export interface IUser {
-    userId?: number;
-    userName?: string;
-    userEmail?: string;
-    userPassword?: string;
-    userCoins?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    id_user?: number;
+    name_user?: string;
+    email_user?: string;
+    password_user?: string;
+    quantity_coins?: number;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 }
 
 @Entity({name: 'user'})
@@ -58,16 +57,14 @@ export class User {
     @Column({
         type: 'datetime',
         nullable: false,
-        name: "createdAt",
-        default: moment.utc().format("YYYY-MM-DD HH:mm:ss")
+        name: "createdAt"
     })
     createdAt: Date;
 
     @Column({
         type: 'datetime',
         nullable: false,
-        name: "updatedAt",
-        default: moment.utc().format("YYYY-MM-DD HH:mm:ss")
+        name: "updatedAt"
     })
     updatedAt: Date;
 }

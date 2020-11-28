@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import UserResolvers from '../graphl/resolvers/user.resolver';
+import UserResolvers from '../graphql/resolvers/user.resolver';
 import UserService from './user.service';
 
 const container = new Container();

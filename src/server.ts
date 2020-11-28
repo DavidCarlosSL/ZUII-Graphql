@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { ApolloServer } from 'apollo-server';
 import { dbConnFactory } from './database/db';
 
-import schema from './graphl/index';
+import schema from './graphql/index';
 
 const port = 3000;
 const server = new ApolloServer({
