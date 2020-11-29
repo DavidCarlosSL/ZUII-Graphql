@@ -38,6 +38,6 @@ export class Library {
     @JoinColumn()
     user: User;
 
-    @OneToMany(type => LibraryAlbum, libraryAlbum => libraryAlbum.id_library_album)
+    @OneToMany(type => LibraryAlbum, libraryAlbum => libraryAlbum.libraryId)
     libraryAlbums: LibraryAlbum[];
 }

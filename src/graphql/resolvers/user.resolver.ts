@@ -14,7 +14,7 @@ import {AuthPrivateKey, JwtPrivateKey} from '../../config/custom-environment-var
 
 @injectable()
 @Resolver(of => UserSchema)
-class UserResolvers {
+class UserResolver {
     constructor(@inject("UserService") private userService: UserService) {}
 
     @Query(returns => UserSchema)
@@ -56,4 +56,4 @@ class UserResolvers {
     }
 }
 
-export default UserResolvers;
+export default UserResolver;

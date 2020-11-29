@@ -46,7 +46,7 @@ export class Track {
     })
     price: number;
 
-    @OneToMany(type => LibraryTrack, libraryTrack => libraryTrack.id_library_track)
+    @OneToMany(type => LibraryTrack, libraryTrack => libraryTrack.trackId)
     trackLibraries: LibraryTrack[];
 
     @ManyToOne(type => Album)

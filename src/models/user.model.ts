@@ -69,6 +69,6 @@ export class User {
     })
     updatedAt: Date;
 
-    @OneToMany(type => Purchase, purchase => purchase.id_purchase)
+    @OneToMany(type => Purchase, purchase => purchase.userId)
     purchases: Purchase[];
 }

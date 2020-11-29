@@ -36,7 +36,7 @@ export class Artist {
     })
     image_artist: string;
 
-    @OneToMany(type => Album, album => album.id_album)
+    @OneToMany(type => Album, album => album.artistId)
     albums: Album[];
 
     @ManyToMany(type => Genre)

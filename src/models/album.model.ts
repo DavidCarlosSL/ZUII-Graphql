@@ -53,10 +53,10 @@ export class Album {
     })
     release_date: string;
 
-    @OneToMany(type => Track, track => track.id_track)
+    @OneToMany(type => Track, track => track.albumId)
     tracks: Track[];
 
-    @OneToMany(type => LibraryAlbum, libraryAlbum => libraryAlbum.id_library_album)
+    @OneToMany(type => LibraryAlbum, libraryAlbum => libraryAlbum.albumId)
     libraryAlbums: LibraryAlbum[];
 
     @ManyToOne(type => Artist)
