@@ -3,6 +3,14 @@ import { Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { LibraryAlbum } from "./library_album.model";
 import { Track } from "./track.model";
 
+import { TrackSchema } from "../graphql/schemas/track.schema";
+
+
+export interface ILibraryTrack {
+    id_library_track: number;
+    trackId: TrackSchema;
+}
+
 @Entity({name: 'library_track'})
 export class LibraryTrack {
     @PrimaryColumn({

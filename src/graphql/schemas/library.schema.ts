@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from "type-graphql";
 
 import { ILibrary } from "../../models/library.model";
+import { LibraryAlbumSchema } from "./libraryAlbum.schema";
 
 @ObjectType()
 export class LibrarySchema implements ILibrary {
@@ -12,4 +13,7 @@ export class LibrarySchema implements ILibrary {
 
     @Field()
     updatedAt: Date;
+
+    @Field(type => [LibraryAlbumSchema], {nullable: true})
+    libraryAlbums?: LibraryAlbumSchema[];
 }

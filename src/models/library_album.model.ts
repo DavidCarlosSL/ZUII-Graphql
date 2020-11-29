@@ -4,6 +4,14 @@ import { Album } from "./album.model";
 import { Library } from "./library.model";
 import { LibraryTrack } from "./library_track.model";
 
+import { AlbumSchema } from "../graphql/schemas/album.schema";
+
+export interface ILibraryAlbum {
+    id_library_album?: number;
+    libraryId?: number;
+    albumId?: AlbumSchema;
+}
+
 @Entity({name: 'library_album'})
 export class LibraryAlbum {
     @PrimaryColumn({
