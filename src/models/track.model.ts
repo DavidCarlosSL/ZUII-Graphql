@@ -38,7 +38,7 @@ export class Track {
     duration_ms: string;
 
     @Column({
-        type: 'decimal',
+        type: 'float',
         width: 3.2,
         nullable: false,
         default: 0.2,

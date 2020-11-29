@@ -23,7 +23,7 @@ export class Purchase {
     id_purchase: number;
 
     @Column({
-        type: 'decimal',
+        type: 'float',
         width: 5.2,
         nullable: false,
         default: 0,

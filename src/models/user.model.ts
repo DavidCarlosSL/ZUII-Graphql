@@ -47,7 +47,7 @@ export class User {
     password_user: string;
 
     @Column({
-        type: 'decimal',
+        type: 'float',
         width: 6.2,
         nullable: false,
         default: 0,

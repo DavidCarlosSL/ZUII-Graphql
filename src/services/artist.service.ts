@@ -35,6 +35,7 @@ class ArtistService {
     public async getArtistById(artistId: number): Promise<Artist>{
         const artist = await this.artistRepository.createQueryBuilder("artist")
         .leftJoinAndSelect("artist.albums", "album")
+        .leftJoinAndSelect("album.genres", "genre")
         .where("id_artist = :artistId", {artistId: artistId})
         .getOne();
         return artist;

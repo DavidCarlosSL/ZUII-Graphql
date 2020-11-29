@@ -40,7 +40,7 @@ class ArtistResolver {
         try{
             const artistResponse = await this.artistService.getArtistById(artistId);
             if(!artistResponse)
-                throw new ApolloError("Artist of the given id was not found", "200", {artistFound: false})
+                throw new ApolloError("The artist of the given id was not found", "200", {artistFound: false})
 
             return artistResponse;
         }catch(error){
