@@ -5,7 +5,7 @@ import * as jwt from 'jsonwebtoken';
 import * as md5 from 'md5';
 import * as momentTz from 'moment-timezone';
 
-import UserSchema, {AddUserInput} from '../schemas/user.schema';
+import { UserSchema, AddUserInput} from '../schemas/user.schema';
 import Auth from '../schemas/auth.schema';
 
 import UserService from '../../services/user.service';

@@ -2,7 +2,7 @@ import { Field, ObjectType } from "type-graphql";
 
 import { IUser } from "../../models/user.model";
 
-import UserSchema from "./user.schema";
+import { UserSchema } from "./user.schema";
 
 interface IAuth {
     token: string;

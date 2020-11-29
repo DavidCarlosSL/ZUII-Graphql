@@ -13,8 +13,7 @@ import { GenreSchema } from "./schemas/genre.schema";
 import { LibrarySchema } from "./schemas/library.schema";
 import { LibraryAlbumSchema } from "./schemas/libraryAlbum.schema";
 import { TrackSchema } from "./schemas/track.schema";
-
-import UserSchema from "./schemas/user.schema";
+import { UserSchema } from "./schemas/user.schema";
 
 const schema = buildSchemaSync({
     resolvers: [UserSchema, UserResolver, GenreSchema, ArtistSchema, ArtistResolver, AlbumSchema, AlbumResolver, TrackSchema, LibrarySchema, LibraryResolver, LibraryAlbumSchema],

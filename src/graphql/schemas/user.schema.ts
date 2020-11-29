@@ -2,7 +2,7 @@ import { Field, ID, InputType, ObjectType } from "type-graphql";
 import { IUser } from "../../models/user.model";
 
 @ObjectType()
-class UserSchema implements IUser {
+export class UserSchema implements IUser {
     @Field(type => ID)
     id_user: number;
 
@@ -36,5 +36,3 @@ export class AddUserInput implements Partial<UserSchema> {
     @Field(type => String, {nullable: false})
     password_user: string;
 }
-
-export default UserSchema;
