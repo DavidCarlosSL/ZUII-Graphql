@@ -9,13 +9,15 @@ import UserSchema, {AddUserInput} from '../schemas/user.schema';
 import Auth from '../schemas/auth.schema';
 
 import UserService from '../../services/user.service';
+import LibraryService from '../../services/library.service';
 
 import {AuthPrivateKey, JwtPrivateKey} from '../../config/custom-environment-variables.json';
+import { NewUser } from '../schemas/newUser.schema';
 
 @injectable()
 @Resolver(of => UserSchema)
 class UserResolver {
-    constructor(@inject("UserService") private userService: UserService) {}
+    constructor(@inject("UserService") private userService: UserService, @inject("LibraryService") private libraryService: LibraryService) {}
 
     @Query(returns => UserSchema)
 
@@ -37,8 +39,8 @@ class UserResolver {
         }
     }
 
-    @Mutation(returns => UserSchema, {name: 'SignUp'})
-    async addUser(@Arg('data', {nullable: false}) newUserData: AddUserInput): Promise<UserSchema> {
+    @Mutation(returns => NewUser, {name: 'SignUp'})
+    async addUser(@Arg('data', {nullable: false}) newUserData: AddUserInput): Promise<NewUser> {
         try{
             const { name_user, email_user, password_user } = newUserData;
 
@@ -47,9 +49,14 @@ class UserResolver {
                 throw new ApolloError("This email is already being used", "200", {emailInUse: true});
             
             const now = momentTz(new Date()).tz('America/Sao_Paulo').format('YYYY-MM-DD HH:mm:ss');
-    
+            
             userResponse = await this.userService.addUser({name_user, email_user, password_user: md5(password_user + AuthPrivateKey), createdAt: now, updatedAt: now});
-            return userResponse;
+            const libraryResponse = await this.libraryService.addLibrary({id_library: userResponse.id_user, createdAt: now, updatedAt: now, user: userResponse.id_user})
+
+            return {
+                user: {...userResponse},
+                library: libraryResponse
+            };
         }catch(error){
             return error;
         }

@@ -28,14 +28,25 @@ class UserService {
         return user;
     }
 
+    public async getUserById(userId: number): Promise<User>{
+        const user = await this.userRepository.createQueryBuilder()
+        .where("id_user = :userId", {userId: userId})
+        .getOne();
+        return user;
+    }
+
     public async addUser(data: IUser): Promise<User>{
-        const response = await this.userRepository.save({
+        const insertUser = await this.userRepository.createQueryBuilder().insert().into(User)
+        .values([{
             name_user: data.name_user,
             email_user: data.email_user,
             password_user: data.password_user,
             createdAt: data.createdAt,
             updatedAt: data.updatedAt
-        });
+        }])
+        .execute();
+
+        const response = await this.getUserById(insertUser.raw.insertId);
         return response;
     }
 }

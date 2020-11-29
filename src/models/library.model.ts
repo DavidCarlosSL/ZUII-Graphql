@@ -5,7 +5,7 @@ import { User } from "./user.model";
 
 export interface ILibrary {
     id_library?: number;
-    userId?: number;
+    user?: number;
     createdAt?: Date | string;
     updatedAt?: Date | string;
 }
@@ -15,7 +15,7 @@ export class Library {
     @PrimaryColumn({
         type: 'int',
         primary: true,
-        generated: 'increment',
+        generated: false,
         name: 'id_library'
     })
     id_library: number;
@@ -35,8 +35,8 @@ export class Library {
     updatedAt: Date;
 
     @OneToOne(() => User)
-    @JoinColumn()
-    user: User;
+    @JoinColumn({name: 'userId', referencedColumnName: 'id_user'})
+    user: User | number;
 
     @OneToMany(type => LibraryAlbum, libraryAlbum => libraryAlbum.libraryId)
     libraryAlbums: LibraryAlbum[];
