@@ -1,0 +1,134 @@
+#Sign In Mutation
+mutation{
+  SignIn(user_email: "teste@teste.com", user_password: "123"){
+    token
+    user{
+      name_user
+      createdAt
+    }
+  }
+}
+
+#SignUp Mutation
+mutation{
+  SignUp(data: {name_user: "Teste", email_user: "teste@teste.com", password_user: "123"}){
+    user {
+      id_user
+      createdAt
+    }
+    library {
+      id_library
+    }
+  }
+}
+
+#Query to get Artists from the database (with pagination - limit and offset)
+query{
+  artists(limit: 20, offset: 0) {
+	id_artist
+    name_artist
+    image_artist
+    genres {
+      id_genre
+      name_genre
+    }
+  }
+}
+
+#Query to get Artists by a GenreId (with pagination - limit and offset)
+query{
+  genreArtists(genreId: 1, limit: 20, offset: 0){ #id_genre
+    id_artist
+    name_artist
+    image_artist
+    genres {
+      id_genre
+      name_genre
+    }
+  }
+}
+
+#Query to get an Artist Albums
+query {
+  artistById(artistId: 2) { #id_artist
+    name_artist
+    image_artist
+    albums {
+      id_album
+      name_album
+      image_album
+      release_date
+      genres {
+        name_genre
+      }
+    }
+  }
+}
+
+#Query to get an Album tracks
+query{
+  albumById(albumId: 3){ #id_album
+    name_album
+    image_album
+    release_date
+    genres {
+      name_genre
+    }
+    tracks {
+      id_track
+      name_track
+      duration_ms
+      price
+    }
+  }
+}
+
+#Query to get a user's library (Show an array of albums that belongs to him). Requires authorization header (token)
+query {
+  library {
+    id_library
+    libraryAlbums {
+      id_library_album #Relation between user's library and an Album
+      albumId {
+        name_album
+        image_album
+        release_date
+      }
+    }
+  }
+}
+
+#Query to get tracks from the relation LibraryAlbum (Track belongs to Album and at same time belongs to the user's library). Requires authorization header (token)
+query {
+  libraryAlbum(libraryAlbumId: 4) { #id_library_album
+    libraryTracks {
+      trackId {
+        name_track
+        duration_ms
+      }
+    }
+  }
+}
+
+#Mutation to user purchase a track. Requires authorization header (token).
+mutation {
+  AddPurchase(data: {trackId: 6}){ #id_track
+    id_purchase
+  }
+}
+
+#Query to get all user purchases. Requires authorization header (token).
+query{
+  purchases {
+    id_purchase
+    createdAt
+    value_purchase
+  }
+}
+
+#Mutation to add user coins. Requires authorization header (token).
+mutation{
+  ChangeUserCoins(data: {quantity_coins: 5}) {
+    id_user
+  }
+}
