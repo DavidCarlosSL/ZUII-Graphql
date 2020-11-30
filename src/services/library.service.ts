@@ -3,15 +3,18 @@ import { Connection, getConnection, Repository } from "typeorm";
 
 import { ILibrary, Library } from "../models/library.model";
 import { LibraryAlbum } from "../models/library_album.model";
+import { LibraryTrack } from "../models/library_track.model";
 
 @injectable()
 class LibraryService {
     private connection: Connection;
     private libraryRepository: Repository<Library>
+    private libraryAlbumRepository: Repository<LibraryAlbum>
 
     constructor(){
         this.connection = getConnection('default');
         this.libraryRepository = this.connection.getRepository(Library);
+        this.libraryAlbumRepository = this.connection.getRepository(LibraryAlbum);
     }
 
     public async getLibraryById(libraryId: number): Promise<Library>{
@@ -45,12 +48,30 @@ class LibraryService {
     }
 
     public async getAlbumTracksByLibrary(libraryAlbumId: number, libraryId: number){
-        const albumTracks = await this.connection.getRepository(LibraryAlbum).createQueryBuilder("library_album")
+        const albumTracks = await this.libraryAlbumRepository.createQueryBuilder("library_album")
         .where("id_library_album = :libraryAlbumId AND libraryId = :libraryId", {libraryAlbumId: libraryAlbumId, libraryId: libraryId})
         .innerJoinAndSelect("library_album.libraryTracks", "libraryTracks")
         .innerJoinAndSelect("libraryTracks.trackId", "track")
         .getOne();
         return albumTracks;
+    }
+
+    public async getLibraryAlbumByRelation(libraryId: number, albumId: number){
+        const libraryAlbum = await this.libraryAlbumRepository.createQueryBuilder()
+        .select(["id_library_album"])
+        .where("libraryId = :libraryId AND albumId = :albumId", {libraryId: libraryId, albumId: albumId})
+        .getRawOne();
+        return libraryAlbum;
+    }
+
+    public async addLibraryAlbumRelation(libraryId: number, albumId: number){
+        const libraryAlbum = await this.connection.query(`INSERT INTO library_album (libraryId, albumId) VALUES ('${libraryId}', '${albumId}')`);
+        return libraryAlbum;
+    }
+
+    public async addLibraryTrackRelation(libraryAlbumId: number, trackId: number) {
+        const libraryTrack = await this.connection.query(`INSERT INTO library_track (library_album_id, trackId) VALUES ('${libraryAlbumId}', '${trackId}')`);
+        return libraryTrack;
     }
 }
 

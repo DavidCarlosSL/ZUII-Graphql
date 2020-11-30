@@ -49,6 +49,30 @@ class UserService {
         const response = await this.getUserById(insertUser.raw.insertId);
         return response;
     }
+
+    public async getUserCoinsById(userId: number){
+        const user = await this.userRepository.createQueryBuilder()
+        .select(["quantity_coins"])
+        .where("id_user = :userId", {userId: userId})
+        .getRawOne();
+
+        return user;
+    }
+
+    public async subtractUserCoins(userId: number, quantity: number){
+        await this.userRepository.createQueryBuilder().update(User)
+        .set({quantity_coins: quantity})
+        .where("id_user = :userId", {userId: userId})
+        .execute();
+    }
+
+    public async getUserPurchases(userId: number){
+        const user = await this.userRepository.createQueryBuilder("user")
+        .where("id_user = :userId", {userId: userId})
+        .innerJoinAndSelect("user.purchases", "purchase")
+        .getMany();
+        return user;
+    }
 }
 
 export default UserService;

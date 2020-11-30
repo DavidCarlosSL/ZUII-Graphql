@@ -1,5 +1,8 @@
 import { Field, ID, InputType, ObjectType } from "type-graphql";
+
 import { IUser } from "../../models/user.model";
+
+import { PurchaseSchema } from "./purchase.schema";
 
 @ObjectType()
 export class UserSchema implements IUser {
@@ -23,6 +26,9 @@ export class UserSchema implements IUser {
     
     @Field()
     updatedAt: Date;
+
+    @Field(type => [PurchaseSchema], {nullable: true})
+    purchases?: PurchaseSchema[];
 }
 
 @InputType({description: "Add User"})

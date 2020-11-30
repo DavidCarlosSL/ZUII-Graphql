@@ -6,8 +6,8 @@ import { User } from "./user.model";
 export interface IPurchase {
     id_purchase?: number;
     value_purchase?: number;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
     userId?: number;
     trackId?: number;
 }
@@ -47,9 +47,9 @@ export class Purchase {
 
     @ManyToOne(type => Track)
     @JoinColumn({name: 'trackId', referencedColumnName: 'id_track'})
-    trackId: Track;
+    trackId: Track | number;
 
     @ManyToOne(type => User)
     @JoinColumn({name: 'userId', referencedColumnName: 'id_user'})
-    userId: User;
+    userId: User | number;
 }
