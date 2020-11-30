@@ -32,6 +32,7 @@ class UserResolver {
     
             return {
                 token: generatedToken,
+                //@ts-ignore
                 user: {...userResponse}
             };
         }catch(error){
@@ -54,6 +55,7 @@ class UserResolver {
             const libraryResponse = await this.libraryService.addLibrary({id_library: userResponse.id_user, createdAt: now, updatedAt: now, user: userResponse.id_user})
 
             return {
+                //@ts-ignore
                 user: {...userResponse},
                 library: libraryResponse
             };
