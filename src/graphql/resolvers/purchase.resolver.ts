@@ -20,17 +20,7 @@ class PurchaseResolver {
     constructor(@inject("PurchaseService") private purchaseService: PurchaseService, @inject("UserService") private userService: UserService,
     @inject("TrackService") private trackService: TrackService, @inject("LibraryService") private libraryService: LibraryService) {}
 
-    @UseMiddleware(isAuth)
-    @Query(returns => [PurchaseSchema], {nullable: true, name: "purchases"})
-    async getUserPurchases(@Ctx() ctx: TContext){
-        try{
-            const userResponse = await this.userService.getUserPurchases(parseInt(ctx.token));
-            
-            return userResponse[0].purchases;
-        }catch(error){
-            return error;
-        }
-    }
+    @Query(returns => PurchaseSchema)
 
     @UseMiddleware(isAuth)
     @Mutation(returns => PurchaseSchema, {name: 'AddPurchase'})
@@ -63,7 +53,7 @@ class PurchaseResolver {
                 userId: userId
             })
 
-            await this.userService.subtractUserCoins(userId, (userCoins.quantity_coins - trackResponse.price));
+            await this.userService.updateUserCoins(userId, (userCoins.quantity_coins - trackResponse.price));
             
             let id_library_album: number;
 

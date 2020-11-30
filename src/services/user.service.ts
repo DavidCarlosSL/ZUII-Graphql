@@ -59,7 +59,7 @@ class UserService {
         return user;
     }
 
-    public async subtractUserCoins(userId: number, quantity: number){
+    public async updateUserCoins(userId: number, quantity: number){
         await this.userRepository.createQueryBuilder().update(User)
         .set({quantity_coins: quantity})
         .where("id_user = :userId", {userId: userId})

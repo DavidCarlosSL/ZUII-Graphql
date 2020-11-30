@@ -1,4 +1,5 @@
 import { Field, ID, InputType, ObjectType } from "type-graphql";
+import { Max, Min } from 'class-validator';
 
 import { IUser } from "../../models/user.model";
 
@@ -41,4 +42,12 @@ export class AddUserInput implements Partial<UserSchema> {
 
     @Field(type => String, {nullable: false})
     password_user: string;
+}
+
+@InputType({description: "Update User Coins"})
+export class UpadteUserCoinsInput implements Partial<UserSchema> {
+    @Field(type => Number, {nullable: false})
+    @Max(1000)
+    @Min(1)
+    quantity_coins: number;
 }

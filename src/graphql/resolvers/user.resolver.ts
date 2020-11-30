@@ -1,25 +1,40 @@
 import { ApolloError } from 'apollo-server';
 import { inject, injectable } from 'inversify';
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Ctx, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
 import * as jwt from 'jsonwebtoken';
 import * as md5 from 'md5';
 import * as momentTz from 'moment-timezone';
 
-import { UserSchema, AddUserInput} from '../schemas/user.schema';
+import { UserSchema, AddUserInput, UpadteUserCoinsInput} from '../schemas/user.schema';
+import { PurchaseSchema } from '../schemas/purchase.schema';
+import { NewUser } from '../schemas/newUser.schema';
 import Auth from '../schemas/auth.schema';
 
 import UserService from '../../services/user.service';
 import LibraryService from '../../services/library.service';
 
+import { isAuth } from '../../middlewares/isAuth';
+
 import {AuthPrivateKey, JwtPrivateKey} from '../../config/custom-environment-variables.json';
-import { NewUser } from '../schemas/newUser.schema';
+
+import { TContext } from '../../utils/interfaces/context.interface';
 
 @injectable()
 @Resolver(of => UserSchema)
 class UserResolver {
     constructor(@inject("UserService") private userService: UserService, @inject("LibraryService") private libraryService: LibraryService) {}
 
-    @Query(returns => UserSchema)
+    @UseMiddleware(isAuth)
+    @Query(returns => [PurchaseSchema], {nullable: true, name: "purchases"})
+    async getUserPurchases(@Ctx() ctx: TContext){
+        try{
+            const userResponse = await this.userService.getUserPurchases(parseInt(ctx.token));
+            
+            return userResponse[0].purchases;
+        }catch(error){
+            return error;
+        }
+    }
 
     @Mutation(returns => Auth, {name: 'SignIn'})
     async getUserByEmailAndPassword(@Arg('user_email', {nullable: false}) user_email: string, @Arg('user_password', {nullable: false}) user_password: string): Promise<Auth>{
@@ -59,6 +74,22 @@ class UserResolver {
                 user: {...userResponse},
                 library: libraryResponse
             };
+        }catch(error){
+            return error;
+        }
+    }
+
+    @UseMiddleware(isAuth)
+    @Mutation(returns => UserSchema, {name: 'ChangeUserCoins', nullable: true})
+    async changeUserCoins(@Arg('data', {nullable: false}) newUserCoins: UpadteUserCoinsInput, @Ctx() ctx: TContext){
+        try{
+            const { quantity_coins } = newUserCoins;
+
+            const userCoinsResponse = await this.userService.getUserCoinsById(parseInt(ctx.token));
+            if(!userCoinsResponse)
+                throw new ApolloError("Invalid action", "403")
+
+            await this.userService.updateUserCoins(parseInt(ctx.token), (userCoinsResponse.quantity_coins + quantity_coins))
         }catch(error){
             return error;
         }
