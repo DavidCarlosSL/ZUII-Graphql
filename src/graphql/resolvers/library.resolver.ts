@@ -33,6 +33,8 @@ class LibraryResolver {
     async getLibraryAlbumTracks(@Arg("libraryAlbumId", {nullable: false}) libraryAlbumId: number, @Ctx() ctx: TContext){
         try{
             const response = await this.libraryService.getAlbumTracksByLibrary(libraryAlbumId, parseInt(ctx.token));
+            if(!response)
+                throw new ApolloError("Invalid action.", "403")
             
             return response;
         }catch(error){
