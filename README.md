@@ -3,7 +3,7 @@
 
 <h2> :dart: Objetivo </h2>
 <p> Desenvolver pela primeira vez uma API em GraphQL; portanto, o aprendizado era o que mais contava. </p>
-<p> Utilizei Node.js e Typescript juntamente com as ferramentas ApolloServer, TypeORM, Invesify, TypeGraphQL e JWT. Como Banco de Dados foi o MySQL. </p> <br>
+<p> Utilizei Node.js e Typescript juntamente com as ferramentas ApolloServer, TypeORM, Inversify, TypeGraphQL e JWT. Como Banco de Dados foi o MySQL. </p> <br>
 
 <h2> :page_with_curl: Descrição do Projeto </h2>
 <p> A ideia era criar uma plataforma de compras fictícias de músicas. </p>
