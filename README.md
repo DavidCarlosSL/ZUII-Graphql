@@ -2,7 +2,6 @@
 <br>
 <h2> :dart: Objetivo </h2>
 <p> Desenvolver pela primeira vez uma API em GraphQL; portanto, o aprendizado era o que mais contava. </p>
-<p> Utilizei Node.js e Typescript juntamente com as ferramentas ApolloServer, TypeORM, Inversify, TypeGraphQL e JWT. Como Banco de Dados foi o MySQL. </p> <br>
 
 <h2> :page_with_curl: Descrição do Projeto </h2>
 <p> A ideia era criar uma plataforma de compras fictícias de músicas. </p>
@@ -14,3 +13,15 @@
 
 <h2> :thought_balloon: Exemplos </h2>
 <p> Os exemplos de Queries e Mutations estão no arquivo <strong> ./examples.gql </strong></p> <br>
+
+<h2> :mag_right: Tecnologias </h2>
+<ul>
+  <li> Node.js </li>
+  <li> Apollo-server </li>
+  <li> GraphQL </li>
+  <li> TypeGraphQL </li>
+  <li> MySQL </li>
+  <li> TypeORM </li>
+  <li> Inversify </li>
+  <li> JWT </li>
+</ul><br>
