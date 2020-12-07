@@ -4,7 +4,6 @@ import { dbConnFactory } from './database/db';
 
 import schema from './graphql/index';
 
-const port = 3000;
 const server = new ApolloServer({
     schema,
     context: ({req}) => {
@@ -18,7 +17,7 @@ const server = new ApolloServer({
 
 dbConnFactory().then(() => {
     console.log("Success Database Connection");
-    server.listen(port).then(({ url }) => {
+    server.listen(process.env.PORT).then(({ url }) => {
         console.log(`Server ready at ${url}`);
     })
 }).catch((err) => {
